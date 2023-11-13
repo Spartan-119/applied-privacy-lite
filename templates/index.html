@@ -1,0 +1,65 @@
+<!-- FILEPATH: /C:/Users/Abin/OneDrive/Desktop/privacy_layer/base/templates/index.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to the Applied Privacy's Phase 1 demo.</title>
+    <style>
+      /* Add CSS styling here */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      h1 {
+        text-align: center;
+        margin-top: 0;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      textarea {
+        width: 100%;
+        height: 200px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        resize: none;
+      }
+      button {
+        display: block;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to the Applied Privacy's Phase 1 demo.</h1>
+      <form>
+        <label for="top-textarea">Enter your text here:</label>
+        <textarea id="top-textarea" name="top-textarea"></textarea>
+        <label for="bottom-textarea">The masked text:</label>
+        <textarea id="bottom-textarea" name="bottom-textarea"></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

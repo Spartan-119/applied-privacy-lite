@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-class Net(nn.Module):
+class ConvolutionNeuralNet(nn.Module):
     """A simple CNN suitable for simple vision tasks."""
 
     def __init__(self, num_classes: int) -> None:
-        super(Net, self).__init__()
+        super(ConvolutionNeuralNet, self).__init__()
         # Convolutional layers
         self.conv1 = nn.Conv2d(1, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
@@ -27,7 +27,7 @@ class Net(nn.Module):
         x = self.fc3(x)
         return x
 
-def train(net, trainloader, optimizer, epochs, device: str):
+def train_model(net, trainloader, optimizer, epochs, device: str):
     """Train the network on the training set.
 
     Args:
@@ -49,7 +49,7 @@ def train(net, trainloader, optimizer, epochs, device: str):
             loss.backward()
             optimizer.step()
 
-def test(net, testloader, device: str):
+def test_model(net, testloader, device: str):
     """Validate the network on the entire test set.
 
     Args:

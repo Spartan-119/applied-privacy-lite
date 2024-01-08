@@ -1,9 +1,9 @@
 from collections import OrderedDict
 from omegaconf import DictConfig
 import torch
-from model import Net, test
+from model import ConvolutionNeuralNet, test_model
 
-def get_on_fit_config(config: DictConfig):
+def prepare_configuration(config: DictConfig):
     """
     Return function that prepares configuration to send to clients.
 
@@ -25,14 +25,14 @@ def get_on_fit_config(config: DictConfig):
         """
         # This function can be adapted over time based on server_round.
         return {
-            "lr": config.lr,
+            "lr": config.learning_rate,
             "momentum": config.momentum,
             "local_epochs": config.local_epochs,
         }
 
     return fit_config_fn
 
-def get_evaluate_fn(num_classes: int, testloader):
+def get_global_evaluation(num_classes: int, testloader):
     """
     Define function for global evaluation on the server.
 
@@ -56,16 +56,16 @@ def get_evaluate_fn(num_classes: int, testloader):
             Tuple containing loss and a dictionary with evaluation metrics.
         """
         # Initialize model and device
-        model = Net(num_classes)
+        model = ConvolutionNeuralNet(num_classes)
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
         # Load parameters into the model
         params_dict = zip(model.state_dict().keys(), parameters)
-        state_dict = OrderedDict({k: torch.Tensor(v) for k, v in params_dict})
+        state_dict = OrderedDict({key: torch.Tensor(value) for key, value in params_dict})
         model.load_state_dict(state_dict, strict=True)
 
         # Evaluate the global model on the test set
-        loss, accuracy = test(model, testloader, device)
+        loss, accuracy = test_model(model, testloader, device)
 
         # Report the loss and any other metric (inside a dictionary)
         return loss, {"accuracy": accuracy}

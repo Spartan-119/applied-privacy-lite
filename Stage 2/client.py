@@ -3,7 +3,7 @@ from typing import Dict, Tuple
 from flwr.common import NDArrays, Scalar
 import torch
 import flwr as fl
-from model import Net, train, test
+from model import ConvolutionNeuralNet, train_model, test_model
 
 class FlowerClient(fl.client.NumPyClient):
     """Define a Flower Client for Federated Learning."""
@@ -24,7 +24,7 @@ class FlowerClient(fl.client.NumPyClient):
         self.valloader = valloader
 
         # A model that is randomly initialized at first
-        self.model = Net(num_classes)
+        self.model = ConvolutionNeuralNet(num_classes)
 
         # Determine if this client has access to GPU support or not
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -75,7 +75,7 @@ class FlowerClient(fl.client.NumPyClient):
         optim = torch.optim.SGD(self.model.parameters(), lr=lr, momentum=momentum)
 
         # Local training
-        train(self.model, self.trainloader, optim, epochs, self.device)
+        train_model(self.model, self.trainloader, optim, epochs, self.device)
 
         # Return updated model parameters, number of examples, and metrics
         return self.get_parameters({}), len(self.trainloader), {}
@@ -95,12 +95,12 @@ class FlowerClient(fl.client.NumPyClient):
         self.set_parameters(parameters)
 
         # Perform evaluation
-        loss, accuracy = test(self.model, self.valloader, self.device)
+        loss, accuracy = test_model(self.model, self.valloader, self.device)
 
         # Return loss, number of examples, and evaluation metrics
         return float(loss), len(self.valloader), {"accuracy": accuracy}
 
-def generate_client_fn(trainloaders, valloaders, num_classes):
+def generate_client_function(trainloaders, valloaders, num_classes):
     """
     Return a function to spawn a FlowerClient with specified train and validation loaders.
 
@@ -112,7 +112,7 @@ def generate_client_fn(trainloaders, valloaders, num_classes):
     Returns:
         Function to spawn a FlowerClient with a given client ID.
     """
-    def client_fn(cid: str):
+    def client_function(client_id: str):
         """
         Spawn a FlowerClient with the specified client ID.
 
@@ -123,9 +123,9 @@ def generate_client_fn(trainloaders, valloaders, num_classes):
             FlowerClient using the specified train and validation loaders.
         """
         return FlowerClient(
-            trainloader=trainloaders[int(cid)],
-            valloader=valloaders[int(cid)],
-            num_classes=num_classes,
+            trainloader = trainloaders[int(client_id)],
+            valloader = valloaders[int(client_id)],
+            num_classes = num_classes,
         )
 
-    return client_fn
+    return client_function

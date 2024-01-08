@@ -9,19 +9,19 @@
 # Check the follow-up tutorial on using Hydra with Flower for advanced usage.
 
 # Experiment Settings
-num_rounds: 10  # Number of Federated Learning rounds in the experiment
-num_clients: 100  # Total number of clients available (also the number of partitions to create)
-batch_size: 20  # Batch size used by clients during training
-num_classes: 10  # Number of classes in the dataset (MNIST); informs the model's output fully-connected layer
+number_of_rounds: 10  # Number of Federated Learning rounds in the experiment
+number_of_clients: 100  # Total number of clients available (also the number of partitions to create)
+client_batch_size: 20  # Batch size used by clients during training
+number_of_classes: 10  # Number of classes in the dataset (MNIST); informs the model's output fully-connected layer
 
 # Federated Learning Rounds Configuration
-num_clients_per_round_fit: 10  # Number of clients involved in each fit round
+number_of_clients_per_round_fit: 10  # Number of clients involved in each fit round
                                # (fit round: clients receive the model from the server and perform local training)
-num_clients_per_round_eval: 25  # Number of clients involved in each evaluate round
+number_of_clients_per_round_eval: 25  # Number of clients involved in each evaluate round
                                 # (evaluate round: clients evaluate the model sent by the server on their local dataset without training)
 
 # Client Configuration for Training Rounds
-config_fit:  # Configuration sent to each client by the server when sampled, dynamically configuring client-side training
-  lr: 0.01  # Learning rate used by clients
+configuration_fit:  # Configuration sent to each client by the server when sampled, dynamically configuring client-side training
+  learning_rate: 0.01  # Learning rate used by clients
   momentum: 0.9  # Momentum used by the SGD optimizer on the client side
   local_epochs: 1  # Number of training epochs each client performs in a fit() round

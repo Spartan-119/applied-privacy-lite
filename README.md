@@ -1,6 +1,6 @@
 # Project Title: Applied Privacy Lite
 
-![Output](https://github.com/Spartan-119/applied-privacy-lite/compressed_output_gif.gif)
+![Output](https://github.com/Spartan-119/applied-privacy-lite/blob/main/compressed_output_gif.gif)
 
 ## Overview
 

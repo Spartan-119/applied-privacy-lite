@@ -1,5 +1,7 @@
 # Project Title: Applied Privacy Lite
 
+![Output](https://github.com/Spartan-119/compressed_output_gif.gif)
+
 ## Overview
 
 Applied Privacy Lite is an open-source initiative dedicated to fortifying data privacy through a two-phase approach. The first phase involves implementing a robust privacy layer using advanced transformers in natural language processing (NLP) for the identification and extraction of Personally Identifiable Information (PII) from textual data. In the second phase, the focus shifts to incorporating federated learning, allowing the model to learn across decentralized devices while prioritizing user privacy.
